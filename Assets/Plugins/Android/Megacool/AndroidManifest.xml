@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="co.megacool.megacoolunity">
+    <uses-sdk android:minSdkVersion="16" />
+
+    <application>
+        <!-- The main activity, capable of opening Megacool deep links -->
+        <activity android:name="com.unity3d.player.UnityPlayerActivity">
+
+            <!-- Normal https:// links -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data
+                    android:host="@string/megacoolunity_base_url_host"
+                    android:pathPrefix="@string/megacoolunity_base_url_path"
+                    android:scheme="https"/>
+            </intent-filter>
+
+            <!-- Links with custom scheme where https doesn't work -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="@string/megacool_app_scheme"/>
+            </intent-filter>
+        </activity>
+
+        <!-- Ensure we receive referrals from the Play Store -->
+        <receiver android:name="co.megacool.megacool.ReferralReceiver">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER"/>
+            </intent-filter>
+        </receiver>
+
+        <!-- Register Megacool as a file provider to enable sharing GIFs -->
+        <provider
+            android:name="co.megacool.megacool.MegacoolFileProvider"
+            android:authorities="com.Flobelle.MegacoolTest.megacool_file_provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/megacool_paths"/>
+        </provider>
+    </application>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+</manifest>

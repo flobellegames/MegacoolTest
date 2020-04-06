@@ -1,0 +1,5 @@
+<resources>
+    <string name="megacool_app_scheme" translatable="false">flomgcl</string>
+    <string name="megacoolunity_base_url_host" translatable="false">mgcl.co</string>
+    <string name="megacoolunity_base_url_path" translatable="false">/megatooltest</string>
+</resources>
